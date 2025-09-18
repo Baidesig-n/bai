@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>首页 - 足球直播论坛</title>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        .layui-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .layui-carousel img {
+            transition: opacity 0.5s ease-in-out;
+        }
+        .layui-carousel img:hover {
+            opacity: 0.8;
+        }
+        .layui-timeline-title {
+            font-weight: bold;
+        }
+        .layui-badge-orange {
+            background-color: #ff9800 !important;
+        }
+    </style>
+</head>
+<body>
+<!-- 导航栏 -->
+<div class="layui-row">
+    <div class="layui-col-md12">
+        <nav class="layui-nav">
+            <a class="layui-nav-item layui-this">首页</a>
+            <a class="layui-nav-item">赛事直播</a>
+            <a class="layui-nav-item">社区讨论</a>
+            <a class="layui-nav-item">关于我们</a>
+        </nav>
+    </div>
+</div>
+
+<div class="layui-container">
+    <div class="layui-row layui-col-space15" style="padding: 20px;">
+        <div class="layui-col-md12">
+            <div class="layui-carousel" id="carousel" lay-filter="carousel">
+				   <div carousel-item>
+					   <div><img src="../images/1.jpg" style="width:100%; height:300px; object-fit:cover;"></div>
+					   <div><img src="../images/2.jpg" style="width:100%; height:300px; object-fit:cover;"></div>
+					   <div><img src="../images/3.jpg" style="width:100%; height:300px; object-fit:cover;"></div>
+				   </div>
+            </div>
+        </div>
+
+        <div class="layui-col-md12" style="margin-top: 20px;">
+            <h3>🔥 热门赛事</h3>
+            <table class="layui-table">
+                <thead>
+                <tr>
+                    <th>比赛</th>
+                    <th>时间</th>
+                    <th>联赛</th>
+                    <th>状态</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>皇马 vs 巴萨</td>
+                    <td>今晚 20:00</td>
+                    <td>西甲</td>
+                    <td><span class="layui-badge layui-bg-orange">直播中</span></td>
+                </tr>
+                <tr>
+                    <td>曼联 vs 利物浦</td>
+                    <td>周六 22:30</td>
+                    <td>英超</td>
+                    <td><span class="layui-badge">未开始</span></td>
+                </tr>
+                <tr>
+                    <td>拜仁慕尼黑 vs 多特蒙德</td>
+                    <td>周日 18:00</td>
+                    <td>德甲</td>
+                    <td><span class="layui-badge">未开始</span></td>
+                </tr>
+                <tr>
+                    <td>巴黎圣日耳曼 vs 里昂</td>
+                    <td>周一 21:00</td>
+                    <td>法甲</td>
+                    <td><span class="layui-badge">未开始</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="layui-col-md12">
+            <h3>💬 热门帖子</h3>
+            <ul class="layui-timeline">
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <div class="layui-timeline-title">C罗还能踢世界杯吗？<small> @球迷老李</small></div>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <div class="layui-timeline-title">梅西退役后谁是新球王？<small> @足球迷小张</small></div>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <div class="layui-timeline-title">如何提高射门命中率？<small> @训练达人</small></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- 页脚 -->
+<div class="layui-footer" style="text-align: center; margin-top: 20px;">
+    <p>© 2023 足球直播论坛. All rights reserved.</p>
+</div>
+
+<script src="../lib/layui-v2.6.3/layui.js"></script>
+<script>
+    layui.use('carousel', function(){
+        var carousel = layui.carousel;
+        carousel.render({elem: '#carousel', width: '100%', height: '300px'});
+    });
+</script>
+</body>
+</html>

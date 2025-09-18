@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>直播列表 - 足球直播论坛</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        .layui-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .layui-table th, .layui-table td {
+            text-align: center;
+        }
+        .layui-btn-xs {
+            margin-top: 5px;
+        }
+        .fa-star-o {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-container" style="padding: 20px;">
+    <h2>📺 今日直播</h2>
+    <table class="layui-table" lay-skin="line">
+        <thead>
+        <tr>
+            <th>主队</th>
+            <th>vs</th>
+            <th>客队</th>
+            <th>时间</th>
+            <th>联赛</th>
+            <th>直播源</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>拜仁</td>
+            <td>vs</td>
+            <td>多特</td>
+            <td>20:00</td>
+            <td>德甲</td>
+            <td><a href="#" target="_blank">腾讯体育</a></td>
+            <td>
+                <button class="layui-btn layui-btn-xs play-button">播放</button>
+                <button class="layui-btn layui-btn-xs favorite-button"><i class="fa fa-star-o"></i> 收藏</button>
+            </td>
+        </tr>
+        <tr>
+            <td>皇马</td>
+            <td>vs</td>
+            <td>巴萨</td>
+            <td>22:00</td>
+            <td>西甲</td>
+            <td><a href="#" target="_blank">爱奇艺体育</a></td>
+            <td>
+                <button class="layui-btn layui-btn-xs play-button">播放</button>
+                <button class="layui-btn layui-btn-xs favorite-button"><i class="fa fa-star-o"></i> 收藏</button>
+            </td>
+        </tr>
+        <tr>
+            <td>曼联</td>
+            <td>vs</td>
+            <td>利物浦</td>
+            <td>23:00</td>
+            <td>英超</td>
+            <td><a href="#" target="_blank">咪咕视频</a></td>
+            <td>
+                <button class="layui-btn layui-btn-xs play-button">播放</button>
+                <button class="layui-btn layui-btn-xs favorite-button"><i class="fa fa-star-o"></i> 收藏</button>
+            </td>
+        </tr>
+        <tr>
+            <td>巴黎圣日耳曼</td>
+            <td>vs</td>
+            <td>里昂</td>
+            <td>00:00</td>
+            <td>法甲</td>
+            <td><a href="#" target="_blank">新浪体育</a></td>
+            <td>
+                <button class="layui-btn layui-btn-xs play-button">播放</button>
+                <button class="layui-btn layui-btn-xs favorite-button"><i class="fa fa-star-o"></i> 收藏</button>
+            </td>
+        </tr>
+        <tr>
+            <td>AC米兰</td>
+            <td>vs</td>
+            <td>国际米兰</td>
+            <td>02:45</td>
+            <td>意甲</td>
+            <td><a href="#" target="_blank">PP体育</a></td>
+            <td>
+                <button class="layui-btn layui-btn-xs play-button">播放</button>
+                <button class="layui-btn layui-btn-xs favorite-button"><i class="fa fa-star-o"></i> 收藏</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- 页脚 -->
+<div class="layui-footer" style="text-align: center; margin-top: 20px;">
+    <p>© 2023 足球直播论坛. All rights reserved.</p>
+</div>
+
+<script src="../lib/layui-v2.6.3/layui.js"></script>
+<script>
+    // 添加播放功能（示例）
+    document.querySelectorAll('.play-button').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            alert('正在播放该比赛');
+        });
+    });
+
+    // 添加收藏功能（示例）
+    document.querySelectorAll('.favorite-button').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            alert('已收藏该比赛');
+        });
+    });
+</script>
+</body>
+</html>

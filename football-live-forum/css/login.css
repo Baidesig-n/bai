@@ -1,0 +1,25 @@
+.layuimini-login {
+    width: 400px;
+    margin: 10% auto;
+    background: rgba(255,255,255,0.9);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+}
+.layuimini-login h2 { color: #333; margin-bottom: 10px; }
+.layuimini-login p { color: #666; margin-bottom: 20px; }
+.layuimini-login .layui-input {
+    margin-bottom: 15px;
+    height: 45px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+.layuimini-login .layui-btn {
+    height: 45px;
+    font-size: 16px;
+}
+.login-other { margin-top: 15px; }
+.layuimini-qiandao { color: #009688; }

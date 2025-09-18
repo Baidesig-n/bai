@@ -1,0 +1,48 @@
+{
+  "homeInfo": {
+    "title": "首页",
+    "href": "page/home.html"
+  },
+  "logoInfo": {
+    "title": "足球直播论坛",
+    "image": "images/logo.png",
+    "href": ""
+  },
+  "menuInfo": [
+    {
+      "title": "首页",
+      "icon": "fa fa-home",
+      "href": "page/home.html"
+    },
+    {
+      "title": "赛事中心",
+      "icon": "fa fa-futbol-o",
+      "href": "page/matches.html"
+    },
+    {
+      "title": "直播大厅",
+      "icon": "fa fa-play-circle",
+      "href": "page/live.html"
+    },
+    {
+      "title": "论坛社区",
+      "icon": "fa fa-comments",
+      "href": "page/forum.html"
+    },
+    {
+      "title": "赛事提醒",
+      "icon": "fa fa-bell",
+      "href": "page/reminder.html"
+    },
+    {
+      "title": "个人中心",
+      "icon": "fa fa-user",
+      "href": "page/profile.html"
+    },
+    {
+      "title": "帮助中心",
+      "icon": "fa fa-question-circle",
+      "href": "page/help.html"
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>设置 - 足球直播论坛</title>
+  <link rel="stylesheet" href="https://unpkg.com/layui@2.6.3/dist/css/layui.css">
+  <style>
+    /* 夜间模式样式 */
+    .night-mode {
+      background-color: #2c2c2c !important;
+      color: #e0e0e0;
+    }
+    .night-mode .layui-container {
+      background-color: #3a3a3a;
+      color: #e0e0e0;
+    }
+    .night-mode .layui-form-label {
+      color: #e0e0e0;
+    }
+    .night-mode .layui-input {
+      background-color: #4a4a4a;
+      border-color: #555;
+      color: #e0e0e0;
+    }
+    .night-mode .layui-form-select dl dd.layui-this {
+      background-color: #555;
+    }
+    /* 其他样式 */
+    body {
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .layui-container {
+      transition: background-color 0.3s;
+    }
+  </style>
+</head>
+<body>
+  <div class="layui-container">
+    <h2>⚙️ 设置</h2>
+    <div class="layui-form" lay-filter="settingForm">
+      <div class="layui-form-item">
+        <label class="layui-form-label">夜间模式</label>
+        <div class="layui-input-block">
+          <input type="checkbox" name="nightmode" lay-skin="switch" lay-filter="nightModeSwitch" title="开启夜间模式">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">消息提醒</label>
+        <div class="layui-input-block">
+          <input type="checkbox" name="notify" lay-skin="switch" checked lay-filter="notifySwitch" title="接收消息推送">
+        </div>
+      </div>
+
+       <div class="layui-form-item">
+        <label class="layui-form-label">主题颜色</label>
+        <div class="layui-input-inline">
+          <select name="theme" lay-filter="themeSelect">
+            <option value="default">默认</option>
+            <option value="blue">科技蓝</option>
+            <option value="green">清新绿</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="layui-form-item">
+        <div class="layui-input-block">
+          <button class="layui-btn" lay-submit lay-filter="saveSettings">保存设置</button>
+          <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/layui@2.6.3/dist/layui.js"></script>
+  <script>
+    layui.use(['form', 'layer'], function(){
+      var form = layui.form;
+      var layer = layui.layer;
+      var $ = layui.$;
+
+      // 监听夜间模式开关
+      form.on('switch(nightModeSwitch)', function(data){
+        if(this.checked){
+          $('body').addClass('night-mode');
+        } else {
+          $('body').removeClass('night-mode');
+        }
+      });
+
+      // 监听主题颜色选择 (示例：仅改变按钮颜色)
+      form.on('select(themeSelect)', function(data){
+        var theme = data.value;
+        var btnColorClass = '';
+        if(theme === 'blue') btnColorClass = 'layui-btn-primary';
+        if(theme === 'green') btnColorClass = 'layui-btn-normal';
+
+        $('.layui-btn').removeClass('layui-btn-primary layui-btn-normal').addClass(btnColorClass);
+      });
+
+      // 监听保存设置按钮提交
+      form.on('submit(saveSettings)', function(data){
+        // 这里可以将 data.field 发送给后端
+        console.log(data.field); // 当前表单数据
+
+        // 模拟保存成功
+        layer.msg('设置已保存', {icon: 1, time: 1500});
+
+        // 阻止表单默认提交
+        return false;
+      });
+
+      // 页面加载时，根据本地存储初始化设置（示例）
+      // var savedNightMode = localStorage.getItem('nightMode') === 'true';
+      // if(savedNightMode) {
+      //   $('input[name="nightmode"]').prop('checked', true);
+      //   form.render(); // 重新渲染表单以反映状态
+      //   $('body').addClass('night-mode');
+      // }
+
+    });
+  </script>
+</body>
+</html>

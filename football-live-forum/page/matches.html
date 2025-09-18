@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>赛事 - 足球直播论坛</title>
+  <link rel="stylesheet" href="https://unpkg.com/layui@2.6.3/dist/css/layui.css">
+</head>
+<body style="padding: 20px;">
+  <div class="layui-container">
+    <h2>🏆 联赛积分榜</h2>
+    <div class="layui-tab">
+      <ul class="layui-tab-title">
+        <li class="layui-this">英超</li><li>西甲</li><li>德甲</li><li>意甲</li>
+      </ul>
+      <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+          <table class="layui-table">
+            <thead><tr><th>排名</th><th>球队</th><th>场次</th><th>胜</th><th>平</th><th>负</th><th>积分</th></tr></thead>
+            <tbody id="premier-data"></tbody>
+          </table>
+        </div>
+        <div class="layui-tab-item">
+          <table class="layui-table"><thead><tr><th>排名</th><th>球队</th><th>场次</th><th>胜</th><th>平</th><th>负</th><th>积分</th></tr></thead><tbody id="la-liga-data"></tbody></table>
+        </div>
+        <div class="layui-tab-item">
+          <table class="layui-table"><thead><tr><th>排名</th><th>球队</th><th>场次</th><th>胜</th><th>平</th><th>负</th><th>积分</th></tr></thead><tbody id="bundesliga-data"></tbody></table>
+        </div>
+        <div class="layui-tab-item">
+          <table class="layui-table"><thead><tr><th>排名</th><th>球队</th><th>场次</th><th>胜</th><th>平</th><th>负</th><th>积分</th></tr></thead><tbody id="serie-a-data"></tbody></table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://unpkg.com/layui@2.6.3/dist/layui.js"></script>
+  <script>
+    layui.use([], function() {
+      const data = {
+        "英超": [{"排名":1,"球队":"曼城","场次":7,"胜":6,"平":1,"负":0,"积分":19},{"排名":2,"球队":"利物浦","场次":7,"胜":5,"平":2,"负":0,"积分":17},{"排名":3,"球队":"阿森纳","场次":7,"胜":5,"平":1,"负":1,"积分":16}],
+        "西甲": [{"排名":1,"球队":"皇马","场次":6,"胜":5,"平":1,"负":0,"积分":16},{"排名":2,"球队":"巴萨","场次":6,"胜":4,"平":2,"负":0,"积分":14}],
+        "德甲": [{"排名":1,"球队":"拜仁","场次":6,"胜":5,"平":0,"负":1,"积分":15}],
+        "意甲": [{"排名":1,"球队":"国米","场次":6,"胜":5,"平":1,"负":0,"积分":16}]
+      };
+
+      const map = {
+        '英超': 'premier-data',
+        '西甲': 'la-liga-data',
+        '德甲': 'bundesliga-data',
+        '意甲': 'serie-a-data'
+      };
+
+      for (let league in data) {
+        let tbodyId = map[league];
+        let html = '';
+        data[league].forEach(row => {
+          html += `<tr>
+            <td>${row.排名}</td><td>${row.球队}</td><td>${row.场次}</td><td>${row.胜}</td><td>${row.平}</td><td>${row.负}</td><td><strong>${row.积分}</strong></td>
+          </tr>`;
+        });
+        document.getElementById(tbodyId).innerHTML = html;
+      }
+    });
+  </script>
+</body>
+</html>

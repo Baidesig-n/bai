@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>个人中心 - 足球直播论坛</title>
+  <link rel="stylesheet" href="https://unpkg.com/layui@2.6.3/dist/css/layui.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      padding: 20px 0;
+    }
+    .layui-card-header {
+      font-weight: bold;
+      background-color: #f2f2f2;
+    }
+    .user-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .user-info-item {
+      margin-bottom: 10px;
+    }
+    .user-info-item strong {
+      display: inline-block;
+      width: 80px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- 导航栏 -->
+<div class="layui-row" style="margin: 0 20px;">
+  <div class="layui-col-md12">
+    <div class="layui-nav layui-bg-blue">
+      <a href="#" class="layui-nav-item layui-this">首页</a>
+      <a href="#" class="layui-nav-item">直播列表</a>
+      <a href="#" class="layui-nav-item">社区讨论</a>
+      <a href="#" class="layui-nav-item layui-this">个人中心</a>
+    </div>
+  </div>
+</div>
+
+<!-- 主体内容 -->
+<div class="layui-container" style="margin-top: 20px;">
+  <div class="layui-row layui-col-space15">
+
+    <!-- 左侧：用户信息 -->
+    <div class="layui-col-md6">
+      <div class="layui-card">
+        <div class="layui-card-header">👤 基本信息</div>
+        <div class="layui-card-body">
+          <!-- 头像 + 昵称 -->
+          <div style="display: flex; align-items: center; margin-bottom: 20px;">
+            <img src="https://unpkg.com/@layui/layui-v2.6.3/images/avatar.jpg" alt="头像" class="user-avatar">
+            <div style="margin-left: 15px;">
+              <p style="margin: 0; font-size: 18px; font-weight: bold;">球迷小张</p>
+              <p style="margin: 5px 0 0; color: #999;">LV.5 资深球迷</p>
+            </div>
+          </div>
+
+          <!-- 信息列表 -->
+          <div class="user-info-item"><strong>邮箱：</strong>zhangsan@example.com</div>
+          <div class="user-info-item"><strong>积分：</strong><span class="layui-badge-rim">890</span></div>
+          <div class="user-info-item"><strong>等级：</strong>LV.5</div>
+          <div class="user-info-item"><strong>发帖数：</strong>12</div>
+          <div class="user-info-item"><strong>评论数：</strong>45</div>
+          <div class="user-info-item"><strong>注册时间：</strong>2023-05-12</div>
+
+          <!-- 操作按钮 -->
+          <div style="margin-top: 20px;">
+            <button class="layui-btn layui-btn-normal layui-btn-sm">✏️ 编辑资料</button>
+            <button class="layui-btn layui-btn-primary layui-btn-sm">🔐 修改密码</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右侧：我的收藏 & 最近活动 -->
+    <div class="layui-col-md6">
+
+      <!-- 我的收藏 -->
+      <div class="layui-card">
+        <div class="layui-card-header">⭐ 我的收藏</div>
+        <div class="layui-card-body">
+          <ul class="layui-timeline">
+            <li class="layui-timeline-item">
+              <i class="layui-icon layui-timeline-axis"></i>
+              <div class="layui-timeline-content">
+                <h5 style="margin: 5px 0;">皇马 vs 巴萨 直播源</h5>
+                <small>西甲 | 2025-04-05</small>
+              </div>
+            </li>
+            <li class="layui-timeline-item">
+              <i class="layui-icon layui-timeline-axis"></i>
+              <div class="layui-timeline-content">
+                <h5 style="margin: 5px 0;">如何提高射门技巧？</h5>
+                <small>技术讨论 | 2025-04-03</small>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 最近活动 -->
+      <div class="layui-card">
+        <div class="layui-card-header">🔄 最近活动</div>
+        <div class="layui-card-body">
+          <ul class="layui-timeline">
+            <li class="layui-timeline-item">
+              <i class="layui-icon layui-timeline-axis layui-bg-green"></i>
+              <div class="layui-timeline-content">
+                <p style="margin: 5px 0;">在 <a href="#">C罗还能踢世界杯吗？</a> 中发表了评论</p>
+                <small>2 小时前</small>
+              </div>
+            </li>
+            <li class="layui-timeline-item">
+              <i class="layui-icon layui-timeline-axis layui-bg-blue"></i>
+              <div class="layui-timeline-content">
+                <p style="margin: 5px 0;">发布了新帖子：<a href="#">欧冠淘汰赛规则详解</a></p>
+                <small>昨天</small>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- 页脚 -->
+<div class="layui-footer" style="text-align: center; margin-top: 30px; padding: 20px; color: #666;">
+  © 2025 足球直播论坛. All rights reserved. <br>
+  <small>让每一个球迷都不错过精彩瞬间</small>
+</div>
+
+<script src="https://unpkg.com/layui@2.6.3/dist/layui.js"></script>
+<script>
+  // 示例：按钮交互
+  layui.use('layer', function(){
+    var layer = layui.layer;
+    var $ = layui.jquery;
+
+    $('.layui-btn').on('click', function(){
+      var text = $(this).text().trim();
+      if (text.includes('编辑资料')) {
+        layer.msg('进入编辑页面...');
+        // window.location.href = 'edit.html';
+      } else if (text.includes('修改密码')) {
+        layer.open({
+          title: '修改密码',
+          content: '功能开发中...',
+          skin: 'layui-layer-molv'
+        });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

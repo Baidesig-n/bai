@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>⚽ 足球直播论坛 - 热血球迷的聚集地</title>
+  <link rel="icon" href="images/favicon.ico">
+  <link rel="stylesheet" href="https://unpkg.com/layui@2.6.3/dist/css/layui.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: url('images/bg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      background-attachment: fixed;
+      font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
+      color: #333;2
+      padding: 0;
+      margin: 0;
+    }
+
+    /* 半透明遮罩层 */
+    body::before {
+      content: "";
+      position: fixed;2
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+    }
+
+    .main-container {
+      max-width: 1200px;
+      margin: 30px auto;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .welcome-banner {
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(45deg, #005c97, #36d1dc);
+      color: white;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    .welcome-banner h1 {
+      font-size: 32px;
+      margin: 10px 0;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+    .welcome-banner .ball {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background: url('https://cdn-icons-png.flaticon.com/512/2639/2639912.png') no-repeat center;
+      background-size: contain;
+      animation: bounce 3s infinite;
+    }
+    .welcome-banner .ball:nth-child(1) { top: 10px; left: 10%; animation-delay: 0s; }
+    .welcome-banner .ball:nth-child(2) { top: 20px; right: 15%; animation-delay: 1s; }
+    .welcome-banner .ball:nth-child(3) { bottom: 10px; left: 20%; animation-delay: 2s; }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(10deg); }
+    }
+
+    .module-card {
+      margin-bottom: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      border-left: 4px solid #009688;
+    }
+    .module-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      border-left-color: #005f54;
+    }
+    .module-card.live:hover {
+      border-left-color: #ff5722;
+    }
+    .module-card.forum:hover {
+      border-left-color: #ff9800;
+    }
+
+    .module-icon {
+      font-size: 28px;
+      margin-right: 12px;
+      vertical-align: middle;
+    }
+
+    .card-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card-text {
+      flex: 1;
+    }
+    .card-img {
+      width: 60px;
+      height: 60px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.7;
+    }
+
+    .live .card-img { background-image: url('https://cdn-icons-png.flaticon.com/512/2748/2748695.png'); }
+    .home .card-img { background-image: url('https://cdn-icons-png.flaticon.com/512/2929/2929652.png'); }
+    .matches .card-img { background-image: url('https://cdn-icons-png.flaticon.com/512/3097/3097392.png'); }
+    .forum .card-img { background-image: url('https://cdn-icons-png.flaticon.com/512/2818/2818863.png'); }
+    .notice .card-img { background-image: url('https://cdn-icons-png.flaticon.com/512/684/684908.png'); }
+    .profile .card-img { background-image: url('https://cdn-icons-png.flaticon.com/512/2202/2202115.png'); }
+
+    .layui-btn {
+      border-radius: 20px;
+      padding: 0 20px;
+      height: 40px;
+      line-height: 40px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    
+    <!-- 欢迎横幅 -->
+    <div class="welcome-banner">
+      <div class="ball"></div>
+      <div class="ball"></div>
+      <div class="ball"></div>
+      <h1><i class="layui-icon layui-icon-football"></i> 足球直播论坛</h1>
+      <p style="font-size: 18px;">⚽ 实时赛事 · 热血讨论 · 球迷狂欢</p>
+    </div>
+
+    <!-- 模块卡片 -->
+    <div class="layui-row layui-col-space20">
+      
+      <!-- 首页 -->
+      <div class="layui-col-md6">
+        <div class="layui-card module-card home">
+          <div class="layui-card-header">
+            <i class="layui-icon layui-icon-home module-icon"></i>首页
+          </div>
+          <div class="layui-card-body">
+            <div class="card-content">
+              <div class="card-text">
+                <p>🔥 热门赛事推荐 | 轮播图 | 精彩集锦</p>
+                <a href="page/home.html" class="layui-btn layui-btn-primary">进入主页</a>
+              </div>
+              <div class="card-img"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 直播 -->
+      <div class="layui-col-md6">
+        <div class="layui-card module-card live">
+          <div class="layui-card-header">
+            <i class="layui-icon layui-icon-video module-icon"></i>直播
+          </div>
+          <div class="layui-card-body">
+            <div class="card-content">
+              <div class="card-text">
+                <p>📺 今日全场直播 | 高清流畅 | 多线路</p>
+                <a href="page/live.html" class="layui-btn layui-btn-danger">立即观看</a>
+              </div>
+              <div class="card-img"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 赛事 -->
+      <div class="layui-col-md6">
+        <div class="layui-card module-card matches">
+          <div class="layui-card-header">
+            <i class="layui-icon layui-icon-chart module-icon"></i>赛事
+          </div>
+          <div class="layui-card-body">
+            <div class="card-content">
+              <div class="card-text">
+                <p>🏆 积分榜 | 赛程表 | 战报分析</p>
+                <a href="page/matches.html" class="layui-btn layui-btn-normal">查看详情</a>
+              </div>
+              <div class="card-img"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 论坛 -->
+      <div class="layui-col-md6">
+        <div class="layui-card module-card forum">
+          <div class="layui-card-header">
+            <i class="layui-icon layui-icon-form module-icon"></i>论坛
+          </div>
+          <div class="layui-card-body">
+            <div class="card-content">
+              <div class="card-text">
+                <p>💬 球迷热议 | 战术分析 | 足彩预测</p>
+                <a href="page/forum.html" class="layui-btn layui-btn-warm">参与讨论</a>
+              </div>
+              <div class="card-img"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 消息 -->
+      <div class="layui-col-md6">
+        <div class="layui-card module-card notice">
+          <div class="layui-card-header">
+            <i class="layui-icon layui-icon-notice module-icon"></i>设置
+          </div>
+          <div class="layui-card-body">
+            <div class="card-content">
+              <div class="card-text">
+                <p>🔔 系统设置 | 消息提醒 </p>
+                <a href="page/setting.html" class="layui-btn">查看消息</a>
+              </div>
+              <div class="card-img"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 个人中心 -->
+      <div class="layui-col-md6">
+        <div class="layui-card module-card profile">
+          <div class="layui-card-header">
+            <i class="layui-icon layui-icon-user module-icon"></i>个人中心
+          </div>
+          <div class="layui-card-body">
+            <div class="card-content">
+              <div class="card-text">
+                <p>👤 我的资料 | 收藏 | 发帖记录</p>
+                <a href="page/profile.html" class="layui-btn layui-btn-primary">进入中心</a>
+              </div>	
+              <div class="card-img"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+      <p>© 2025 足球直播论坛 · 为热爱而生 ⚽</p>
+    </footer>
+
+  </div>
+
+  <script src="https://unpkg.com/layui@2.6.3/dist/layui.js"></script>
+  <script>
+    layui.use([], function() {
+      console.log("欢迎来到足球直播论坛！");
+    });
+  </script>
+</body>
+</html>

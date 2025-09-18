@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>足球直播论坛 - 热门讨论</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/layui-src/dist/layui.css" media="all">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        .layuimini-container {
+            padding: 20px;
+        }
+        .forum-section {
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #e6e6e6;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .forum-section h3 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #333;
+            font-weight: bold;
+        }
+        .search-bar {
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .search-bar input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            outline: none;
+        }
+        .search-bar button {
+            padding: 8px 16px;
+            background-color: #009688;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .search-bar button:hover {
+            background-color: #007a6c;
+        }
+        .forum-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        .forum-table th,
+        .forum-table td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+        .forum-table th {
+            background-color: #f2f2f2;
+            color: #333;
+            font-weight: 600;
+        }
+        .forum-table tr:hover {
+            background-color: #f9f9f9;
+        }
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        .pagination .page-info {
+            flex: 1;
+        }
+        .pagination .page-size {
+            margin-left: 10px;
+        }
+        .pagination .page-nav a {
+            margin: 0 5px;
+            padding: 5px 10px;
+            text-decoration: none;
+            color: #009688;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .pagination .page-nav a:hover {
+            background-color: #009688;
+            color: white;
+        }
+        .pagination .page-nav a.disabled {
+            color: #ccc;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        .pagination .page-nav a.active {
+            background-color: #009688;
+            color: white;
+            border-color: #009688;
+        }
+    </style>
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+        <!-- 论坛讨论模块 -->
+        <div class="forum-section">
+            <h3><i class="layui-icon layui-icon-note"></i> 论坛 · 热门讨论</h3>
+
+            <!-- 搜索栏 -->
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="搜索帖子标题...">
+                <button id="searchButton"><i class="layui-icon layui-icon-search"></i> 搜索</button>
+            </div>
+
+            <!-- 帖子列表 -->
+            <table class="forum-table" id="postTable">
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>标题</th>
+                        <th>作者</th>
+                        <th>发布时间</th>
+                        <th>回复数</th>
+                    </tr>
+                </thead>
+                <tbody id="postList">
+                    <!-- 数据由 JavaScript 动态生成 -->
+                </tbody>
+            </table>
+
+            <!-- 分页控件 -->
+            <div class="pagination">
+                <div class="page-info">
+                    共 <span id="totalPosts">0</span> 条，每页显示
+                    <select id="pageSizeSelect">
+                        <option value="5">5</option>
+                        <option value="10" selected>10</option>
+                        <option value="15">15</option>
+                    </select> 条
+                </div>
+                <div class="page-nav">
+                    <a href="javascript:void(0);" id="prevPage" class="disabled">上一页</a>
+                    <span id="pageInfo">1/1</span>
+                    <a href="javascript:void(0);" id="nextPage">下一页</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://unpkg.com/layui-src/dist/layui.js"></script>
+<script>
+    // 模拟真实数据（可替换为 AJAX 请求）
+    const allPosts = [
+        { id: 1, title: "梅西还能在美职联踢多久？", author: "老球迷张哥", date: "2025-09-17 21:30", replies: 42 },
+        { id: 2, title: "C罗回归欧洲？可能性分析", author: "皇马粉丝", date: "2025-09-17 18:15", replies: 38 },
+        { id: 3, title: "英超新赛季争冠格局预测", author: "英超观察员", date: "2025-09-16 22:10", replies: 56 },
+        { id: 4, title: "欧冠抽签结果分析：谁是最大赢家？", author: "欧冠专家", date: "2025-09-16 14:45", replies: 63 },
+        { id: 5, title: "中国男足冲击世界杯还有希望吗？", author: "理性球迷", date: "2025-09-15 20:00", replies: 124 },
+        { id: 6, title: "姆巴佩加盟皇马后的表现评价", author: "法甲解说", date: "2025-09-15 16:30", replies: 49 },
+        { id: 7, title: "足彩推荐：周末五大联赛精选", author: "足彩达人", date: "2025-09-14 11:20", replies: 88 },
+        { id: 8, title: "VAR技术是否破坏了足球的激情？", author: "传统球迷", date: "2025-09-14 09:10", replies: 73 },
+        { id: 9, title: "青训体系建设：中国足球的未来", author: "足球教练", date: "2025-09-13 17:40", replies: 51 },
+        { id: 10, title: "世界杯举办地变迁：从卡塔尔到2030", author: "国际足联观察", date: "2025-09-13 15:05", replies: 37 },
+        { id: 11, title: "女足球迷怎么看女足发展？", author: "女足支持者", date: "2025-09-12 19:20", replies: 29 },
+        { id: 12, title: "足球装备测评：最新战靴推荐", author: "装备党", date: "2025-09-12 13:10", replies: 22 },
+        { id: 13, title: "球迷文化：欧洲vs亚洲", author: "环球球迷", date: "2025-09-11 21:00", replies: 45 },
+        { id: 14, title: "教练战术对比：瓜迪奥拉 vs 克洛普", author: "战术分析师", date: "2025-09-11 18:30", replies: 61 },
+        { id: 15, title: "足球游戏 FIFA25 玩家反馈", author: "电竞玩家", date: "2025-09-10 16:50", replies: 33 }
+    ];
+
+    // 分页变量
+    let currentPage = 1;
+    let pageSize = 10;
+    let filteredPosts = [...allPosts];
+
+    // 渲染帖子列表
+    function renderPosts() {
+        const startIndex = (currentPage - 1) * pageSize;
+        const endIndex = startIndex + pageSize;
+        const currentPosts = filteredPosts.slice(startIndex, endIndex);
+
+        const postList = document.getElementById('postList');
+        postList.innerHTML = '';
+
+        currentPosts.forEach((post, index) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${startIndex + index + 1}</td>
+                <td style="text-align:left; cursor:pointer; color:#009688;" onclick="alert('进入帖子详情：${post.title}')">${post.title}</td>
+                <td>${post.author}</td>
+                <td>${post.date}</td>
+                <td><span style="color:#f60;">${post.replies}</span></td>
+            `;
+            postList.appendChild(tr);
+        });
+
+        // 更新分页信息
+        const totalPages = Math.ceil(filteredPosts.length / pageSize);
+        document.getElementById('totalPosts').textContent = filteredPosts.length;
+        document.getElementById('pageInfo').textContent = `${currentPage}/${totalPages}`;
+
+        // 控制按钮状态
+        document.getElementById('prevPage').className = currentPage === 1 ? 'disabled' : '';
+        document.getElementById('nextPage').className = currentPage === totalPages ? 'disabled' : '';
+    }
+
+    // 搜索功能
+    document.getElementById('searchButton').addEventListener('click', function () {
+        const keyword = document.getElementById('searchInput').value.trim().toLowerCase();
+        if (keyword) {
+            filteredPosts = allPosts.filter(post => post.title.toLowerCase().includes(keyword));
+        } else {
+            filteredPosts = [...allPosts];
+        }
+        currentPage = 1;
+        renderPosts();
+    });
+
+    // 监听回车搜索
+    document.getElementById('searchInput').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            document.getElementById('searchButton').click();
+        }
+    });
+
+    // 每页数量变化
+    document.getElementById('pageSizeSelect').addEventListener('change', function () {
+        pageSize = parseInt(this.value);
+        currentPage = 1;
+        renderPosts();
+    });
+
+    // 上一页
+    document.getElementById('prevPage').addEventListener('click', function () {
+        if (currentPage > 1) {
+            currentPage--;
+            renderPosts();
+        }
+    });
+
+    // 下一页
+    document.getElementById('nextPage').addEventListener('click', function () {
+        const totalPages = Math.ceil(filteredPosts.length / pageSize);
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderPosts();
+        }
+    });
+
+    // 初始化渲染
+    renderPosts();
+</script>
+</body>
+</html>

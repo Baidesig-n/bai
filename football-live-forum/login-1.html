@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>登录 - 足球直播论坛</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="lib/layui-v2.6.3/css/layui.css" media="all">
+    <style>
+        body {
+            background: url('images/football-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 400px;
+            padding: 30px;
+        }
+        .login-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+            font-weight: bold;
+            font-size: 24px;
+        }
+        .captcha-container {
+            display: flex;
+            align-items: center;
+        }
+        .captcha-img {
+            margin-left: 10px;
+            cursor: pointer;
+            height: 38px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-title">⚽ 足球直播论坛</div>
+        <form class="layui-form" action="#" lay-filter="loginForm">
+            <!-- 用户名 -->
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="username" required lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <!-- 密码 -->
+            <div class="layui-form-item">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-block">
+                    <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <!-- 验证码 -->
+            <div class="layui-form-item">
+                <label class="layui-form-label">验证码</label>
+                <div class="layui-input-block captcha-container">
+                    <input type="text" name="captcha" required lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input" style="width: 160px;">
+                    <img src="https://picsum.photos/120/40" alt="验证码" class="captcha-img" onclick="this.src='https://picsum.photos/120/40?r='+Math.random()">
+                </div>
+            </div>
+
+            <!-- 登录按钮 -->
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="login">登录</button>
+                </div>
+            </div>
+
+            <!-- 注册链接 -->
+            <div class="layui-form-item">
+                <div class="layui-input-block" style="text-align: right;">
+                    <a href="javascript:alert('注册功能暂未开放');" style="font-size: 14px;">没有账号？立即注册</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="lib/layui-v2.6.3/layui.js"></script>
+    <script>
+        layui.use(['form', 'layer'], function () {
+            const form = layui.form;
+            const layer = layui.layer;
+
+            // 模拟用户数据库（实际应由后端验证）
+            const users = [
+                { username: 'admin', password: '123456' },
+                { username: 'user', password: '123456' }
+            ];
+
+            // 登录提交事件
+            form.on('submit(login)', function (data) {
+                const username = data.field.username;
+                const password = data.field.password;
+                // const captcha = data.field.captcha; // 实际项目中需与后端比对
+
+                // 简单验证（生产环境应调用 API）
+                const user = users.find(u => u.username === username && u.password === password);
+                if (user) {
+                    layer.msg('登录成功！', {
+                        icon: 1,
+                        time: 1000
+                    }, function () {
+                        // 跳转到首页
+                        window.location.href = 'index.html';
+                    });
+                } else {
+                    layer.msg('用户名或密码错误！', { icon: 2 });
+                }
+
+                return false; // 阻止表单跳转
+            });
+        });
+    </script>
+</body>
+</html>
