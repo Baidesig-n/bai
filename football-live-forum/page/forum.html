@@ -108,6 +108,44 @@
             color: white;
             border-color: #009688;
         }
+        /* 新增按钮样式 */
+        .post-actions {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn {
+            padding: 4px 8px;
+            font-size: 12px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .btn-edit {
+            background-color: #009688;
+            color: white;
+        }
+        .btn-delete {
+            background-color: #ff5722;
+            color: white;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+        /* 发帖按钮 */
+        .post-button {
+            float: right;
+            background-color: #009688;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .post-button:hover {
+            background-color: #007a6c;
+        }
     </style>
 </head>
 <body>
@@ -116,7 +154,10 @@
 
         <!-- 论坛讨论模块 -->
         <div class="forum-section">
-            <h3><i class="layui-icon layui-icon-note"></i> 论坛 · 热门讨论</h3>
+            <h3><i class="layui-icon layui-icon-note"></i> 论坛 · 热门讨论
+                <!-- 发帖按钮 -->
+                <button class="post-button" id="addPostBtn">+ 发新帖</button>
+            </h3>
 
             <!-- 搜索栏 -->
             <div class="search-bar">
@@ -133,6 +174,7 @@
                         <th>作者</th>
                         <th>发布时间</th>
                         <th>回复数</th>
+                        <th>操作</th>
                     </tr>
                 </thead>
                 <tbody id="postList">
@@ -164,7 +206,7 @@
 <script src="https://unpkg.com/layui-src/dist/layui.js"></script>
 <script>
     // 模拟真实数据（可替换为 AJAX 请求）
-    const allPosts = [
+    let allPosts = [
         { id: 1, title: "梅西还能在美职联踢多久？", author: "老球迷张哥", date: "2025-09-17 21:30", replies: 42 },
         { id: 2, title: "C罗回归欧洲？可能性分析", author: "皇马粉丝", date: "2025-09-17 18:15", replies: 38 },
         { id: 3, title: "英超新赛季争冠格局预测", author: "英超观察员", date: "2025-09-16 22:10", replies: 56 },
@@ -181,6 +223,9 @@
         { id: 14, title: "教练战术对比：瓜迪奥拉 vs 克洛普", author: "战术分析师", date: "2025-09-11 18:30", replies: 61 },
         { id: 15, title: "足球游戏 FIFA25 玩家反馈", author: "电竞玩家", date: "2025-09-10 16:50", replies: 33 }
     ];
+
+    // 全局ID计数器
+    let nextId = 16;
 
     // 分页变量
     let currentPage = 1;
@@ -204,6 +249,10 @@
                 <td>${post.author}</td>
                 <td>${post.date}</td>
                 <td><span style="color:#f60;">${post.replies}</span></td>
+                <td class="post-actions">
+                    <button class="btn btn-edit" data-id="${post.id}">编辑</button>
+                    <button class="btn btn-delete" data-id="${post.id}">删除</button>
+                </td>
             `;
             postList.appendChild(tr);
         });
@@ -258,6 +307,98 @@
         if (currentPage < totalPages) {
             currentPage++;
             renderPosts();
+        }
+    });
+
+    // ==================== CRUD 功能 ====================
+
+    // 1. 打开发帖/编辑弹窗
+    function openPostModal(post = null) {
+        const isEdit = !!post;
+        const title = isEdit ? '编辑帖子' : '发新帖';
+        const content = `
+            <div style="padding: 20px;">
+                <div style="margin-bottom: 15px;">
+                    <label style="display: inline-block; width: 60px;">标题：</label>
+                    <input type="text" id="modalTitle" value="${post ? post.title : ''}" 
+                           style="width: 280px; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: inline-block; width: 60px;">作者：</label>
+                    <input type="text" id="modalAuthor" value="${post ? post.author : '匿名用户'}" 
+                           style="width: 280px; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+            </div>
+        `;
+
+        layer.open({
+            type: 1,
+            title: title,
+            content: content,
+            area: ['400px', '220px'],
+            btn: ['提交', '取消'],
+            yes: function(index) {
+                const titleVal = document.getElementById('modalTitle').value.trim();
+                const authorVal = document.getElementById('modalAuthor').value.trim();
+
+                if (!titleVal) {
+                    layer.msg('标题不能为空');
+                    return;
+                }
+
+                if (isEdit) {
+                    // 修改
+                    const target = allPosts.find(p => p.id === post.id);
+                    if (target) {
+                        target.title = titleVal;
+                        target.author = authorVal;
+                    }
+                } else {
+                    // 新增
+                    allPosts.unshift({
+                        id: nextId++,
+                        title: titleVal,
+                        author: authorVal,
+                        date: new Date().toLocaleString(),
+                        replies: 0
+                    });
+                }
+
+                // 更新视图
+                filteredPosts = [...allPosts];
+                currentPage = 1;
+                renderPosts();
+                layer.close(index);
+            }
+        });
+    }
+
+    // 2. 发新帖按钮
+    document.getElementById('addPostBtn').addEventListener('click', function () {
+        openPostModal();
+    });
+
+    // 3. 编辑按钮
+    document.getElementById('postList').addEventListener('click', function (e) {
+        if (e.target.classList.contains('btn-edit')) {
+            const id = parseInt(e.target.dataset.id);
+            const post = allPosts.find(p => p.id === id);
+            if (post) {
+                openPostModal(post);
+            }
+        }
+    });
+
+    // 4. 删除按钮
+    document.getElementById('postList').addEventListener('click', function (e) {
+        if (e.target.classList.contains('btn-delete')) {
+            const id = parseInt(e.target.dataset.id);
+            layer.confirm('确定要删除这个帖子吗？', { icon: 3, title: '提示' }, function (index) {
+                allPosts = allPosts.filter(p => p.id !== id);
+                filteredPosts = filteredPosts.filter(p => p.id !== id);
+                renderPosts();
+                layer.close(index);
+            });
         }
     });
 

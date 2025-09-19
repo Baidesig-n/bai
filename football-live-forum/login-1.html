@@ -49,7 +49,10 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">用户名</label>
                 <div class="layui-input-block">
-                    <input type="text" name="username" required lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                    <input type="text" name="username" required 
+                           lay-verify="required|username" 
+                           placeholder="请输入用户名" autocomplete="off" 
+                           class="layui-input">
                 </div>
             </div>
 
@@ -57,7 +60,10 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">密码</label>
                 <div class="layui-input-block">
-                    <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                    <input type="password" name="password" required 
+                           lay-verify="required|password" 
+                           placeholder="请输入密码" autocomplete="off" 
+                           class="layui-input">
                 </div>
             </div>
 
@@ -65,8 +71,13 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">验证码</label>
                 <div class="layui-input-block captcha-container">
-                    <input type="text" name="captcha" required lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input" style="width: 160px;">
-                    <img src="https://picsum.photos/120/40" alt="验证码" class="captcha-img" onclick="this.src='https://picsum.photos/120/40?r='+Math.random()">
+                    <input type="text" name="captcha" required 
+                           lay-verify="required|captcha" 
+                           placeholder="请输入验证码" autocomplete="off" 
+                           class="layui-input" style="width: 160px;">
+                    <img src="https://picsum.photos/120/40" alt="验证码" 
+                         class="captcha-img" 
+                         onclick="this.src='https://picsum.photos/120/40?r='+Math.random()">
                 </div>
             </div>
 
@@ -92,6 +103,32 @@
             const form = layui.form;
             const layer = layui.layer;
 
+            // 自定义表单验证规则
+            form.verify({
+                // 验证用户名：只允许中英文、数字、下划线、中划线、@ 和点
+                username: function(value) {
+                    if (value && !/^[a-zA-Z0-9_\u4e00-\u9fa5@\-\.]+$/.test(value)) {
+                        return '用户名只能包含：中文、英文、数字、下划线、中划线、点、@';
+                    }
+                },
+                // 验证密码：禁止危险字符，且至少6位
+                password: function(value) {
+                    if (value) {
+                        if (/[<>''"&\\\/]/.test(value)) {
+                            return '密码不能包含特殊字符：< > \' " & \\ /';
+                        }
+                        if (value.length < 6) {
+                            return '密码至少6位';
+                        }
+                    }
+                },
+                // 验证码长度
+                captcha: [
+                    /^[\S]{4,10}$/,
+                    '验证码必须是4到10位非空字符'
+                ]
+            });
+
             // 模拟用户数据库（实际应由后端验证）
             const users = [
                 { username: 'admin', password: '123456' },
@@ -102,7 +139,6 @@
             form.on('submit(login)', function (data) {
                 const username = data.field.username;
                 const password = data.field.password;
-                // const captcha = data.field.captcha; // 实际项目中需与后端比对
 
                 // 简单验证（生产环境应调用 API）
                 const user = users.find(u => u.username === username && u.password === password);
@@ -111,7 +147,6 @@
                         icon: 1,
                         time: 1000
                     }, function () {
-                        // 跳转到首页
                         window.location.href = 'index.html';
                     });
                 } else {
